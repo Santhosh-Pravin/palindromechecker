@@ -3,30 +3,51 @@ import java.util.Scanner;
 public class PalindromeCheckerApp {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        int choice;
 
-        System.out.println("====================================");
-        System.out.println("     WELCOME TO PALINDROME APP      ");
-        System.out.println("====================================");
+        do {
+            System.out.println("\n====================================");
+            System.out.println("        PALINDROME CHECKER APP      ");
+            System.out.println("====================================");
+            System.out.println("1. Check Palindrome");
+            System.out.println("2. Exit");
+            System.out.print("Enter your choice: ");
 
-        System.out.print("Enter a word or sentence: ");
-        String word = sc.nextLine();
+            choice = sc.nextInt();
+            sc.nextLine();
 
-        String processed = word.toLowerCase().replace(" ", "");
-        String reversed = "";
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter a word or sentence: ");
+                    String input = sc.nextLine();
 
-        for (int i = processed.length() - 1; i >= 0; i--) {
-            reversed = reversed + processed.charAt(i);
-        }
+                    String processed = input.toLowerCase().replace(" ", "");
+                    String reversed = "";
 
-        System.out.println("Original input  : " + word);
-        System.out.println("Processed input : " + processed);
-        System.out.println("Reversed input  : " + reversed);
+                    for (int i = processed.length() - 1; i >= 0; i--) {
+                        reversed = reversed + processed.charAt(i);
+                    }
 
-        if (processed.equals(reversed)) {
-            System.out.println("\"" + word + "\" is a Palindrome");
-        } else {
-            System.out.println("\"" + word + "\" is NOT a Palindrome");
-        }
+                    System.out.println("Original input  : " + input);
+                    System.out.println("Processed input : " + processed);
+                    System.out.println("Reversed input  : " + reversed);
+
+                    if (processed.equals(reversed)) {
+                        System.out.println("\"" + input + "\" is a Palindrome");
+                    } else {
+                        System.out.println("\"" + input + "\" is NOT a Palindrome");
+                    }
+                    break;
+
+                case 2:
+                    System.out.println("Exiting application...");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice! Please enter 1 or 2.");
+            }
+
+        } while (choice != 2);
 
         sc.close();
     }
