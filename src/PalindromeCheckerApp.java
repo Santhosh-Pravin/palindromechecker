@@ -4,32 +4,36 @@ public class PalindromeCheckerApp {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.println("====================================");
-        System.out.println(" CASE & SPACE IGNORED PALINDROME    ");
+        System.out.println(" OOP PALINDROME SERVICE             ");
         System.out.println("====================================");
-        System.out.print("Enter a string: ");
-        String input = sc.nextLine();
+        System.out.print("Enter a word: ");
+        String word = sc.nextLine();
 
-        // Normalize string: Remove all spaces and convert to lower case
-        String normalized = input.replaceAll("\\s+", "").toLowerCase();
+        // Instantiate the object-oriented service
+        PalindromeChecker checker = new PalindromeChecker();
 
-        boolean isPalindrome = true;
+        if (checker.checkPalindrome(word)) {
+            System.out.println(word + " is a Palindrome");
+        } else {
+            System.out.println(word + " is NOT a Palindrome");
+        }
+        sc.close();
+    }
+}
+
+// Encapsulated Class
+class PalindromeChecker {
+    public boolean checkPalindrome(String str) {
         int left = 0;
-        int right = normalized.length() - 1;
-
+        int right = str.length() - 1;
+        
         while (left < right) {
-            if (normalized.charAt(left) != normalized.charAt(right)) {
-                isPalindrome = false;
-                break;
+            if (str.charAt(left) != str.charAt(right)) {
+                return false;
             }
             left++;
             right--;
         }
-
-        if (isPalindrome) {
-            System.out.println("\"" + input + "\" is a Palindrome");
-        } else {
-            System.out.println("\"" + input + "\" is NOT a Palindrome");
-        }
-        sc.close();
+        return true;
     }
 }
