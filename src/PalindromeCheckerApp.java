@@ -1,72 +1,49 @@
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.Scanner;
 import java.util.Stack;
 
 public class PalindromeCheckerApp {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
         System.out.println("====================================");
-        System.out.println(" STRATEGY PATTERN PALINDROME APP    ");
+        System.out.println("  ALGORITHM PERFORMANCE BENCHMARK   ");
         System.out.println("====================================");
-        System.out.print("Enter a word: ");
-        String word = sc.nextLine();
+        
+        // Generate a large palindrome string
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 50000; i++) sb.append("a");
+        String testString = sb.toString();
 
-        System.out.println("\nSelect Palindrome Strategy:");
-        System.out.println("1. Stack Strategy");
-        System.out.println("2. Deque Strategy");
-        System.out.print("Choice: ");
-        int choice = sc.nextInt();
+        long startTime = System.nanoTime();
+        boolean res1 = checkWithTwoPointers(testString);
+        long endTime = System.nanoTime();
+        long twoPointersTime = endTime - startTime;
 
-        // Strategy Pattern application based on Polymorphism runtime choice
-        PalindromeStrategy strategy;
-        if (choice == 2) {
-            strategy = new DequeStrategy();
-        } else {
-            strategy = new StackStrategy();
-        }
+        startTime = System.nanoTime();
+        boolean res2 = checkWithStack(testString);
+        endTime = System.nanoTime();
+        long stackTime = endTime - startTime;
 
-        if (strategy.isPalindrome(word)) {
-            System.out.println(word + " is a Palindrome");
-        } else {
-            System.out.println(word + " is NOT a Palindrome");
-        }
-        sc.close();
+        System.out.println("\nPerformance Comparison (String Length: " + testString.length() + ")");
+        System.out.println("-----------------------------------------------------------------");
+        System.out.println("Two Pointers Execution Time: " + twoPointersTime + " ns (Result: " + res1 + ")");
+        System.out.println("Stack Execution Time:        " + stackTime + " ns (Result: " + res2 + ")");
     }
-}
 
-// Common Interface
-interface PalindromeStrategy {
-    boolean isPalindrome(String str);
-}
-
-// Strategy 1
-class StackStrategy implements PalindromeStrategy {
-    public boolean isPalindrome(String str) {
-        Stack<Character> stack = new Stack<>();
-        for (char c : str.toCharArray()) {
-            stack.push(c);
-        }
-        for (char c : str.toCharArray()) {
-            if (stack.pop() != c) {
-                return false;
-            }
+    public static boolean checkWithTwoPointers(String str) {
+        int left = 0, right = str.length() - 1;
+        while(left < right) {
+            if(str.charAt(left) != str.charAt(right)) return false;
+            left++;
+            right--;
         }
         return true;
     }
-}
 
-// Strategy 2
-class DequeStrategy implements PalindromeStrategy {
-    public boolean isPalindrome(String str) {
-        Deque<Character> deque = new ArrayDeque<>();
-        for (char c : str.toCharArray()) {
-            deque.addLast(c);
+    public static boolean checkWithStack(String str) {
+        Stack<Character> stack = new Stack<>();
+        for(char c : str.toCharArray()) {
+            stack.push(c);
         }
-        while (deque.size() > 1) {
-            if (deque.removeFirst() != deque.removeLast()) {
-                return false;
-            }
+        for(char c : str.toCharArray()) {
+            if(stack.pop() != c) return false;
         }
         return true;
     }
