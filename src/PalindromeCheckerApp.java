@@ -8,24 +8,24 @@ public class PalindromeCheckerApp {
         System.out.println("     WELCOME TO PALINDROME APP      ");
         System.out.println("====================================");
 
-        System.out.print("Enter a word: ");
+        System.out.print("Enter a word or sentence: ");
         String word = sc.nextLine();
 
-        String original = word.toLowerCase();
+        String processed = word.toLowerCase().replace(" ", "");
         String reversed = "";
 
-        for (int i = original.length() - 1; i >= 0; i--) {
-            reversed = reversed + original.charAt(i);
+        for (int i = processed.length() - 1; i >= 0; i--) {
+            reversed = reversed + processed.charAt(i);
         }
 
-        System.out.println("Input word      : " + word);
-        System.out.println("Converted word  : " + original);
-        System.out.println("Reversed word   : " + reversed);
+        System.out.println("Original input  : " + word);
+        System.out.println("Processed input : " + processed);
+        System.out.println("Reversed input  : " + reversed);
 
-        if (original.equals(reversed)) {
-            System.out.println(word + " is a Palindrome");
+        if (processed.equals(reversed)) {
+            System.out.println("\"" + word + "\" is a Palindrome");
         } else {
-            System.out.println(word + " is NOT a Palindrome");
+            System.out.println("\"" + word + "\" is NOT a Palindrome");
         }
 
         sc.close();
