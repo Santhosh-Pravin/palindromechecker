@@ -4,31 +4,32 @@ public class PalindromeCheckerApp {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.println("====================================");
-        System.out.println("   RECURSIVE PALINDROME CHECKER     ");
+        System.out.println(" CASE & SPACE IGNORED PALINDROME    ");
         System.out.println("====================================");
-        System.out.print("Enter a word: ");
-        String word = sc.nextLine();
+        System.out.print("Enter a string: ");
+        String input = sc.nextLine();
 
-        if (isPalindrome(word, 0, word.length() - 1)) {
-            System.out.println(word + " is a Palindrome");
+        // Normalize string: Remove all spaces and convert to lower case
+        String normalized = input.replaceAll("\\s+", "").toLowerCase();
+
+        boolean isPalindrome = true;
+        int left = 0;
+        int right = normalized.length() - 1;
+
+        while (left < right) {
+            if (normalized.charAt(left) != normalized.charAt(right)) {
+                isPalindrome = false;
+                break;
+            }
+            left++;
+            right--;
+        }
+
+        if (isPalindrome) {
+            System.out.println("\"" + input + "\" is a Palindrome");
         } else {
-            System.out.println(word + " is NOT a Palindrome");
+            System.out.println("\"" + input + "\" is NOT a Palindrome");
         }
         sc.close();
-    }
-
-    private static boolean isPalindrome(String str, int start, int end) {
-        // Base condition
-        if (start >= end) {
-            return true;
-        }
-        
-        // Recursive calls compare characters
-        if (str.charAt(start) != str.charAt(end)) {
-            return false;
-        }
-        
-        // Continue inward
-        return isPalindrome(str, start + 1, end - 1);
     }
 }
