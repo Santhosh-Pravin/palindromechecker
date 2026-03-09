@@ -1,54 +1,41 @@
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class PalindromeCheckerApp {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int choice;
+        System.out.println("====================================");
+        System.out.println("     QUEUE + STACK PALINDROME       ");
+        System.out.println("====================================");
+        System.out.print("Enter a word: ");
+        String word = sc.nextLine();
 
-        do {
-            System.out.println("\n====================================");
-            System.out.println("        PALINDROME CHECKER APP      ");
-            System.out.println("====================================");
-            System.out.println("1. Check Palindrome");
-            System.out.println("2. Exit");
-            System.out.print("Enter your choice: ");
+        Queue<Character> queue = new LinkedList<>();
+        Stack<Character> stack = new Stack<>();
 
-            choice = sc.nextInt();
-            sc.nextLine();
+        // Enqueue to Queue and Push to Stack
+        for (int i = 0; i < word.length(); i++) {
+            char c = word.charAt(i);
+            queue.add(c);
+            stack.push(c);
+        }
 
-            switch (choice) {
-                case 1:
-                    System.out.print("Enter a word or sentence: ");
-                    String input = sc.nextLine();
-
-                    String processed = input.toLowerCase().replace(" ", "");
-                    String reversed = "";
-
-                    for (int i = processed.length() - 1; i >= 0; i--) {
-                        reversed = reversed + processed.charAt(i);
-                    }
-
-                    System.out.println("Original input  : " + input);
-                    System.out.println("Processed input : " + processed);
-                    System.out.println("Reversed input  : " + reversed);
-
-                    if (processed.equals(reversed)) {
-                        System.out.println("\"" + input + "\" is a Palindrome");
-                    } else {
-                        System.out.println("\"" + input + "\" is NOT a Palindrome");
-                    }
-                    break;
-
-                case 2:
-                    System.out.println("Exiting application...");
-                    break;
-
-                default:
-                    System.out.println("Invalid choice! Please enter 1 or 2.");
+        boolean isPalindrome = true;
+        // Compare Dequeue vs Pop
+        while (!queue.isEmpty()) {
+            if (queue.remove() != stack.pop()) {
+                isPalindrome = false;
+                break;
             }
+        }
 
-        } while (choice != 2);
-
+        if (isPalindrome) {
+            System.out.println(word + " is a Palindrome");
+        } else {
+            System.out.println(word + " is NOT a Palindrome");
+        }
         sc.close();
     }
 }
